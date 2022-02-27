@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.ML" Version="1.7.0" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="1.7.0" />
+  </ItemGroup>
+  <ItemGroup Label="IrisClassificationModel">
+    <None Include="IrisClassificationModel.consumption.cs">
+      <DependentUpon>IrisClassificationModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="IrisClassificationModel.training.cs">
+      <DependentUpon>IrisClassificationModel.mbconfig</DependentUpon>
+    </None>
+    <None Include="IrisClassificationModel.zip">
+      <DependentUpon>IrisClassificationModel.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
