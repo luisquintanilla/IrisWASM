@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-namespace IrisWASM
+namespace IrisClassification
 {
     public partial class IrisClassificationModel
     {

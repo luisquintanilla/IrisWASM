@@ -1,0 +1,55 @@
+﻿@page "/Prediction"
+@inject HttpClient _client
+@inject IJSRuntime Js
+
+<label>Sepal Length: </label>
+<input type="text" @bind="_sepalLength">
+<br>
+<label>Sepal Width: </label>
+<input type="text" @bind="_sepalWidth">
+<br>
+<label>Petal Length: </label>
+<input type="text" @bind="_petalLength">
+<br>
+<label>Petal Width: </label>
+<input type="text" @bind="_petalWidth">
+<br>
+<button @onclick="GetPrediction">Make prediction</button>
+@*@if (@ModelPrediction == null)
+{
+    <p>Enter data to get a prediction</p>
+}
+else
+{
+    <p>@ModelPrediction</p>
+}*@
+
+@code {
+    private PredictionEngine<IrisClassificationModel.ModelInput, IrisClassificationModel.ModelOutput> _predictionEngine;
+    private string _sepalLength, _sepalWidth, _petalLength, _petalWidth, ModelPrediction;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var savedModel = await _client.GetStreamAsync("https://cors-anywhere.herokuapp.com/https://github.com/luisquintanilla/IrisWASM/raw/main/IrisWASM/IrisClassificationModel.zip");
+        MLContext mlContext = new MLContext();
+        ITransformer _model = mlContext.Model.Load(savedModel, out DataViewSchema schema);
+        _predictionEngine = mlContext.Model.CreatePredictionEngine<IrisClassificationModel.ModelInput, IrisClassificationModel.ModelOutput>(_model);
+    }
+
+    private async Task GetPrediction()
+    {
+
+        var input = new IrisClassificationModel.ModelInput
+        {
+            Col0 = float.Parse(_sepalLength),
+            Col1 = float.Parse(_sepalWidth),
+            Col2 = float.Parse(_petalLength),
+            Col3 = float.Parse(_petalWidth)
+        };
+
+        var prediction = _predictionEngine.Predict(input);
+
+        await Js.InvokeVoidAsync("DisplayPrediction", prediction.PredictedLabel);
+    }
+}

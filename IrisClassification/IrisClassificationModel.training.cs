@@ -9,7 +9,7 @@ using Microsoft.ML.Trainers.FastTree;
 using Microsoft.ML.Trainers;
 using Microsoft.ML;
 
-namespace IrisWASM
+namespace IrisClassification
 {
     public partial class IrisClassificationModel
     {
