@@ -31,7 +31,7 @@ else
     protected override async Task OnInitializedAsync()
     {
 
-        var savedModel = await _client.GetStreamAsync("https://cors-anywhere.herokuapp.com/https://github.com/luisquintanilla/IrisWASM/raw/main/IrisWASM/IrisClassificationModel.zip");
+        var savedModel = await _client.GetStreamAsync("https://cors-anywhere.herokuapp.com/https://github.com/luisquintanilla/IrisWASM/raw/main/IrisClassification/IrisClassificationModel.zip");
         MLContext mlContext = new MLContext();
         ITransformer _model = mlContext.Model.Load(savedModel, out DataViewSchema schema);
         _predictionEngine = mlContext.Model.CreatePredictionEngine<IrisClassificationModel.ModelInput, IrisClassificationModel.ModelOutput>(_model);
